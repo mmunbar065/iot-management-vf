@@ -1,0 +1,314 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* ====== HEADER ====== */
+header {
+  font-family: 'Inter', sans-serif;
+
+  text-align: center;
+  padding: 25px;
+  background-color: #256d27;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+  font-size: 2.3em;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ====== BOTÓN DE AÑADIR DISPOSITIVO ====== */
+.add-device-button {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  background-color: #fff;
+  color: #256d27;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid #256d27;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-device-button:hover {
+  background-color: #256d27;
+  color: white;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ====== FORMULARIOS ====== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+input,
+select {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #256d27;
+  outline: none;
+}
+
+/* ====== BOTONES ====== */
+button {
+  background-color: #256d27;
+  color: white;
+  padding: 14px;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: #1d5b20;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ====== CARDS ====== */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 18px;
+}
+
+.card-title {
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
+
+/* ====== IMÁGENES EN CARDS ====== */
+.card-img-top {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  display: block;
+  margin: 10px auto;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* ====== IMÁGEN EN BOTÓN AÑADIR ====== */
+
+.me-2{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* ====== CONTENEDOR GRID ====== */
+#grid-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px 0;
+  background-color: #e0e0e0;
+}
+
+footer a {
+  color: #256d27;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #1d5b20;
+}
+
+/* ====== ESTILOS ADICIONALES ====== */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#contenedorPadre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#mensaje {
+  align-self: center;
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+  background-color: #cbf1cc; /* Verde oscuro */
+  padding: 10px 20px; /* Espaciado reducido */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+}
+
+
+
+/*boton añadir dispositivo*/
+.navbar-nav .nav-link {
+  font-size: 1.1rem; /* Tamaño uniforme */
+  font-weight: 600;
+  color: white;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+ 
+}
+
+/* Efecto al pasar el mouse */
+.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link.active {
+  background-color: #a5caa7;
+  color: #f8f2d9; /* Color Flax para destacar */
+}
+
+/* ====== CUADRO DE BÚSQUEDA ====== */
+.navbar .form-control {
+  border-radius: 6px;
+  border: 1px solid #91c7b1; /* Borde Cambridge Blue */
+}
+
+.navbar .btn-outline-success {
+  background-color: #91c7b1;
+  color: #313638;
+  border-color: #91c7b1;
+  transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-success:hover {
+  background-color: #f06543; /* Color Tomato */
+  color: white;
+  border-color: #f06543;
+}
+
+/* ====== REDUCCIÓN DE ALTURA ====== */
+.navbar .navbar-toggler {
+  padding: 1px 10px;
+  border-radius: 6px;
+}
+
+/* RESPONSIVE: Ajuste en pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+
+  .navbar-nav .nav-link {
+    display: block;
+    margin: 5px 0;
+  }
+}
+
+/* RESPONSIVE: Ajuste en pantallas extra pequeñas */  
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 1rem;
+  }
+}
+
+/* ====== ESTILOS DE ERROR ====== */
+.error {
+  color: #f06543; /* Color Tomato */
+  font-weight: 600;
+}
+
+/* ====== ESTILOS DE ÉXITO ====== */
+.success {
+  color: #256d27; /* Verde oscuro */
+  font-weight: 600;
+}
+
+/* ====== ESTILOS DE ADVERTENCIA ====== */
+.warning {
+  color: #f0ad4e; /* Naranja */
+  font-weight: 600;
+}
+
+/* ====== ESTILOS DE INFORMACIÓN ====== */
+
+.info {
+  color: #5bc0de; /* Azul */
+  font-weight: 600;
+}
+
+/* ====== ESTILOS DE BOTÓN DE ELIMINAR ====== */
+.delete-button {
+  background-color: #f06543; /* Color Tomato */
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delete-button:hover {
+  background-color: #e6492d; /* Color Red Orange */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+} 
