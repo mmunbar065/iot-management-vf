@@ -7,19 +7,9 @@ $mysqlPort = 3306
 $mysqlPassword = "" # Considera usar variables de entorno
 $mysqlPath = "C:\xampp\mysql\bin\mysql.exe" # Considera usar rutas relativas o variables de entorno
 $database = "iot_management"
-$apiPath = "C:\Users\marmu\OneDrive\Documentos\TFG\API_REST\app" # Ruta absoluta a la carpeta api
-$webPath = "C:\Users\marmu\OneDrive\Documentos\TFG\mi-web\public" # Ruta absoluta a la carpeta web
-
-# Iniciar el servidor Flask
-Write-Host "Iniciando el servidor Flask..."
-try {
-    Start-Process -NoNewWindow -FilePath "python" -ArgumentList "$apiPath\app.py"
-    Write-Host "Servidor Flask en ejecución."
-}
-catch {
-    Write-Error "Error al iniciar el servidor Flask: $($_.Exception.Message)"
-    exit 1
-}
+$apiPath = "C:\Users\marmu\OneDrive\Documentos\TFG\backend\app\controllers" # Ruta absoluta a la carpeta controllers
+$modelsPath = "C:\Users\marmu\OneDrive\Documentos\TFG\backend\app\models" # Ruta absoluta a la carpeta models
+$reqPath = "C:\Users\marmu\OneDrive\Documentos\TFG\backend\app" # Ruta absoluta a la carpeta app
 
 ## Matar procesos en puerto 3000 (Windows)
 Write-Host "Matando procesos en puerto 3000..."
@@ -32,7 +22,7 @@ try {
         $processIDs = $portCheck | ForEach-Object {
             $_.Line.Split(" ")[-1]
         } | Where-Object { $_ -match "^\d+$" } # Filter out non-numeric PIDs
-
+        
         foreach ($processID in $processIDs) {
             if ($null -ne $processID) {
                 try {
@@ -53,7 +43,52 @@ catch {
     Write-Warning "Error al verificar procesos en el puerto 3000: $($_.Exception.Message)"
 }
 
-# Instalar dependencias del proxy
+## Matar procesos en puerto 1883 (Windows)
+Write-Host "Matando procesos en puerto 1883..."
+try {
+    $portNumber = "1883"
+    $portPattern = ":${portNumber}" # Delimitar el patrón
+    $portCheck = netstat -ano | Select-String -Pattern $portPattern
+    if ($portCheck) {
+        Write-Host "Puerto 1883 ya está en uso. Matando procesos..."
+        $processIDs = $portCheck | ForEach-Object {
+            $_.Line.Split(" ")[-1]
+        } | Where-Object { $_ -match "^\d+$" } # Filter out non-numeric PIDs
+        
+        foreach ($processID in $processIDs) {
+            if ($null -ne $processID) {
+                try {
+                    taskkill /PID $processID /F | Out-Null
+                    Write-Host "Proceso con PID $processID finalizado."
+                }
+                catch {
+                    Write-Warning "Error al finalizar el proceso con PID ${processID}: $($_.Exception.Message)"
+                }
+            }
+        }
+    }
+    else {
+        Write-Host "No se encontraron procesos en el puerto 1883."
+    }
+}
+catch {
+    Write-Warning "Error al verificar procesos en el puerto 1883: $($_.Exception.Message)"
+}
+
+
+
+# Iniciar el servidor Flask
+Write-Host "Iniciando el servidor Flask..."
+try {
+    Start-Process -NoNewWindow -FilePath "python" -ArgumentList "$apiPath\routes.py"
+    Write-Host "Servidor Flask en ejecución."
+}
+catch {
+    Write-Error "Error al iniciar el servidor Flask: $($_.Exception.Message)"
+    exit 1
+}
+
+    # Instalar dependencias del proxy
 Write-Host "Instalando dependencias del proxy..."
 Set-Location proxy
 npm install
@@ -93,13 +128,13 @@ USE $database;
 CREATE TABLE IF NOT EXISTS devices (
         id INT AUTO_INCREMENT PRIMARY KEY,
         type VARCHAR(255) NOT NULL,
-        status ENUM('on', 'off') NOT NULL DEFAULT 'off'
-        battery_level TINYINT UNSIGNED DEFAULT NULL
-        temperature DECIMAL(5, 2) DEFAULT NULL
-        humidity DECIMAL(5, 2) DEFAULT NULL
-        pressure DECIMAL(5, 2) DEFAULT NULL
-        last_motion TIMESTAMP NULL DEFAULT NULL
-        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        status TINYTEXT NOT NULL DEFAULT 'off',
+        battery_level TINYINT UNSIGNED DEFAULT NULL,
+        temperature DECIMAL(5, 2) DEFAULT NULL,
+        humidity DECIMAL(5, 2) DEFAULT NULL,
+        pressure DECIMAL(5, 2) DEFAULT NULL,
+        last_motion TIMESTAMP NULL DEFAULT NULL,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 "@
@@ -139,7 +174,7 @@ function Test-PythonPackage {
 # Instalar dependencias de Python
 Write-Host "Instalando dependencias de Python..."
 try {
-    pip install -r "$apiPath\requirements.txt"
+    pip install -r "$reqPath\requirements.txt"
     Write-Host "Dependencias de Python instaladas."
 }
 catch {
@@ -177,4 +212,15 @@ Test-Database
 Write-Host "Abriendo la interfaz en el navegador..."
 Start-Process "http://localhost:3000"
 
+
 Write-Host "¡Todo listo! Prueba agregar dispositivos desde add-device.html"
+# -----------------------------------------------
+# INICIAR EL CONECTOR MQTT
+# -----------------------------------------------
+Write-Host "Iniciando el conector MQTT..."
+try {
+    python "$apiPath\mqtt_controller.py"
+} catch {
+    Write-Error "Error al iniciar el conector MQTT: $($_.Exception.Message)"
+    exit 1
+}

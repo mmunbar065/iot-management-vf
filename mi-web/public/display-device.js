@@ -38,8 +38,10 @@ function loadDevices() {
                 <h6 class="card-title">${device.name}</h5>
               <p class="card-text"><strong>Tipo:</strong> ${device.type}</p>
               <p class="card-text"><strong>Estado:</strong> ${device.status}</p>
+              <p class="card-text"><strong>Temperatura:</strong> ${device.temperature}°C</p>
               <p class="card-text"><strong>Batería:</strong> ${device.battery_level}%</p>
-              ${extraInfo}
+                <p class="card-text"><strong>Presión:</strong> ${device.pressure} hPa</p>
+                <p class="card-text"><strong>Humedad:</strong> ${device.humidity}%</p>
             <p class="card-text"><strong>Last update:</strong> ${device.last_update}%</p>
               <button class="btn ${device.status === 'on' ? 'btn-secondary' : 'btn-success'}" 
                       onclick="toggleDevice(${device.id}, '${device.status}')">

@@ -1,3 +1,4 @@
+// Ejecuta este archivo con Node.js para iniciar el servidor proxy
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
